@@ -2,6 +2,17 @@
 
 *This is a Google Hangouts Chat backend for [Errbot](http://errbot.io/).*
 
+Current State
+-----
+
+This is a work in progress, so probably not really useful for production.
+
+TODOs:
+- [x] 1 to 1 Chat
+- [ ] Enable reply on same thread in a room
+- [ ] Actually investigate and enable Errbot room functionality
+- [ ] Code cleanup
+
 Setup
 -----
 
