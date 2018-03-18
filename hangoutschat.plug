@@ -1,0 +1,6 @@
+[Core]
+Name = HangoutsChat
+Module = hangoutschat
+
+[Documentation]
+Description = This is the Hangouts Chat backend for Err.
