@@ -16,7 +16,6 @@ from markdownconverter import hangoutschat_markdown_converter
 # Can't use __name__ because of Yapsy
 log = logging.getLogger('errbot.backends.hangoutschat')
 
-
 class HangoutsChatIdentifier(Identifier):
     def __init__(self, id):
         self._id = str(id)
@@ -129,6 +128,7 @@ class HangoutsChatBackend(ErrBot):
 
         event_data = json.loads(message.data)
         space_name = event_data['space']['name']
+        text = event_data['message']['text']
 
         # If the bot was added or removed, we don't need to return a response.
         if event_data['type'] == 'ADDED_TO_SPACE':
@@ -139,8 +139,14 @@ class HangoutsChatBackend(ErrBot):
             log.info('Bot removed rom space {}'.format(space_name))
             message.ack()
             return
+        
+        # Check if the space type is ROOM
+        if event_data['space']['type'] == 'ROOM':
+            # Remove @ mentions from the text
+            text = ' '.join(word for word in text.split() if not word.startswith('@'))
 
-        message_instance = self.build_message(event_data['message']['text'])
+        # message_instance = self.build_message(event_data['message']['text'])
+        message_instance = self.build_message(text)
 
         sender = event_data['message']['sender']
         message_instance.to = self.bot_identifier
